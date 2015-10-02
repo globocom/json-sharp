@@ -79,4 +79,18 @@ describe('json-sharp', function () {
             expect(result).to.deep.equal('CCC');
         });
     });
+
+    describe('#merge', function () {
+        it('should merge multiple objects', function () {
+            var obj = {
+                '#merge': [
+                    {a: 'aaa'},
+                    {b: 'bbb'},
+                ]
+            };
+
+            var result = JSONSharp.process(obj, {});
+            expect(result).to.deep.equal({a: 'aaa', b: 'bbb'});
+        });
+    });
 });

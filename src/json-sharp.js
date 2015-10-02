@@ -1,5 +1,8 @@
 'use strict';
 
+// TODO: find a cross-platform (node, browser) way to import underscore
+var _ = _ || require('underscore'); // jshint ignore:line
+
 var JSONSharp = {
     process: function (obj, context) {
         var isArrayOrObject = (typeof obj === 'object');
@@ -24,6 +27,10 @@ var JSONSharp = {
         return result;
     },
     operations: {
+        '#merge': function (obj) {
+            // TODO: make it deep.. (lodash? jQuery?)
+            return _.extend.apply(this, obj);
+        },
         '#switch': function (obj, context) {
             var result;
             var value = context[obj['#property']];
