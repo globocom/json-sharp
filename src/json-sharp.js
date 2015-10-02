@@ -2,15 +2,21 @@
 
 var JSONSharp = {
     process: function (obj, context) {
+        var isArrayOrObject = (typeof obj === 'object');
+        if (!isArrayOrObject) {
+            return obj;
+        }
+
         var key;
         var result = this._clone(obj);
+
         for (key in result) {
             if (!result.hasOwnProperty(key)) {
                 continue;
             }
 
             if ((key.charAt(0) === '#') && this.operations[key]) {
-                return this.operations[key](result[key], context);
+                return this.process(this.operations[key](result[key], context), context);
             }
         }
         return result;

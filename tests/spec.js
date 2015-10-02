@@ -59,5 +59,24 @@ describe('json-sharp', function () {
             var result = JSONSharp.process(this.obj, context);
             expect(result).to.be.undefined;
         });
+
+        it('should process nested operations', function () {
+            var nested = {
+                '#switch': {
+                    '#property': 'option',
+                    '#case': {
+                        a: 'AAA',
+                        b: 'BBB',
+                        c: {'#switch': {'#property': 'otherOption', '#case': {
+                            cc: 'CCC'
+                        }}}
+                    }
+                }
+            };
+
+            var context = {option: 'c', otherOption: 'cc'};
+            var result = JSONSharp.process(nested, context);
+            expect(result).to.deep.equal('CCC');
+        });
     });
 });
