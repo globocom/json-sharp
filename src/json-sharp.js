@@ -7,7 +7,7 @@ var JSONSharp = {
             return obj;
         }
 
-        var key;
+        var key, operation, options;
         var result = this._clone(obj);
 
         for (key in result) {
@@ -15,8 +15,10 @@ var JSONSharp = {
                 continue;
             }
 
-            if ((key.charAt(0) === '#') && this.operations[key]) {
-                return this.process(this.operations[key](result[key], context), context);
+            operation = this.operations[key];
+            if (operation !== undefined) {
+                options = result[key];
+                return this.process(this.operations[key](options, context), context);
             }
         }
         return result;
