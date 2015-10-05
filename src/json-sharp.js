@@ -23,7 +23,7 @@
                 return obj;
             }
 
-            var key, operation, options;
+            var key, operation, node;
             var result = this._clone(obj);
 
             for (key in result) {
@@ -31,11 +31,14 @@
                     continue;
                 }
 
+                node = result[key];
                 operation = this.operations[key];
+
                 if (operation !== undefined) {
-                    options = result[key];
-                    return this.process(this.operations[key](options, context), context);
+                    return this.process(this.operations[key](node, context), context);
                 }
+
+                result[key] = this.process(node);
             }
             return result;
         },

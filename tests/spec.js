@@ -1,3 +1,5 @@
+/* global before, after */
+
 describe('json-sharp', function () {
     'use strict';
 
@@ -5,6 +7,16 @@ describe('json-sharp', function () {
     var JSONSharp = require('../src/json-sharp').JSONSharp;
 
     describe('.process', function () {
+        before(function () {
+            JSONSharp.operations['#dummy'] = function(obj){
+                return {dummy: obj};
+            };
+        });
+
+        after(function () {
+            delete JSONSharp.operations['#dummy'];
+        });
+
         it('should clone the original object', function () {
             var obj = {a: 'a'};
             var result = JSONSharp.process(obj, {});
@@ -23,6 +35,22 @@ describe('json-sharp', function () {
             var obj = 'str';
             var result = JSONSharp.process(obj, {});
             expect(result).to.be.equal(obj);
+        });
+
+        it('should process operations in objects', function () {
+            var obj = {
+                prop: {'#dummy': 'dummy'}
+            };
+            var result = JSONSharp.process(obj, {});
+            expect(result).to.be.deep.equal({prop: {dummy: 'dummy'}});
+        });
+
+        it('should process operations in arrays', function () {
+            var obj = [
+                {'#dummy': 'dummy'}
+            ];
+            var result = JSONSharp.process(obj, {});
+            expect(result).to.be.deep.equal([{dummy: 'dummy'}]);
         });
     });
 
