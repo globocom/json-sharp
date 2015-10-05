@@ -22,10 +22,12 @@
     "grunt-contrib-watch": "",
     "grunt-mocha-test": "",
     "load-grunt-tasks": "",
-    "mocha": "",
-    "underscore": "^1.8.3"
+    "mocha": ""
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "dependencies": {
+    "deepmerge": "^0.2.10"
   }
 }

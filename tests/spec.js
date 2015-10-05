@@ -92,5 +92,17 @@ describe('json-sharp', function () {
             var result = JSONSharp.process(obj, {});
             expect(result).to.deep.equal({a: 'aaa', b: 'bbb'});
         });
+
+        it('should deeply merge objects', function () {
+            var obj = {
+                '#merge': [
+                    {a: {aa: 'aaa'}},
+                    {a: {bb: 'bbb'}},
+                ]
+            };
+
+            var result = JSONSharp.process(obj, {});
+            expect(result).to.deep.equal({a: {aa: 'aaa', bb: 'bbb'}});
+        });
     });
 });

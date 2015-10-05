@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
         concat: {
             js: {
-                src: ['src/*.js'],
+                src: ['node_modules/deepmerge/index.js', 'src/*.js'],
                 dest: 'dist/<%= pkg.name %>.js'
             },
             options: {
