@@ -18,29 +18,54 @@
 }(this, function (deepmerge) { /* jshint ignore:line */
     var JSONSharp = {
         process: function (obj, context) {
-            var isArrayOrObject = (typeof obj === 'object');
-            if (!isArrayOrObject) {
+            var clone = this._clone(obj);
+            return this.processNode(clone, context);
+        },
+        processNode: function (obj, context) {
+            var objType = Object.prototype.toString.call(obj);
+            var isArray = (objType === '[object Array]');
+            var isObject = (objType === '[object Object]');
+
+            if (isObject) {
+                return this.processObject(obj, context);
+            }
+            else if (isArray) {
+                return this.processArray(obj, context);
+            }
+            else {
                 return obj;
             }
+        },
+        processObject: function (obj, context) {
+            var key, operation;
 
-            var key, operation, node;
-            var result = this._clone(obj);
+            operation = this.getOperation(obj);
+            if (operation !== undefined) {
+                return this.processNode(operation.func(obj[operation.name], context), context);
+            }
 
-            for (key in result) {
-                if (!result.hasOwnProperty(key)) {
+            for (key in obj) {
+                if (!obj.hasOwnProperty(key)) {
                     continue;
                 }
 
-                node = result[key];
-                operation = this.operations[key];
-
-                if (operation !== undefined) {
-                    return this.process(this.operations[key](node, context), context);
-                }
-
-                result[key] = this.process(node);
+                obj[key] = this.processNode(obj[key]);
             }
-            return result;
+
+            return obj;
+        },
+        processArray: function (obj, context) {
+            for (var i = 0; i < obj.length; i++) {
+                obj[i] = this.processNode(obj[i], context);
+            }
+            return obj;
+        },
+        getOperation: function (obj) {
+            for (var key in this.operations) {
+                if (this.operations.hasOwnProperty(key) && obj.hasOwnProperty(key)) {
+                    return {name: key, func: this.operations[key]};
+                }
+            }
         },
         operations: {
             '#merge': function (obj) {
