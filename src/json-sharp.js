@@ -41,7 +41,7 @@
 
             operation = this.getOperation(obj);
             if (operation !== undefined) {
-                return this.processNode(operation.func(obj[operation.name], context), context);
+                return operation.func(this.processNode(obj[operation.name], context), context);
             }
 
             for (key in obj) {
@@ -49,7 +49,7 @@
                     continue;
                 }
 
-                obj[key] = this.processNode(obj[key]);
+                obj[key] = this.processNode(obj[key], context);
             }
 
             return obj;
