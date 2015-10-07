@@ -28,7 +28,7 @@ format.
 
 Given the following object and context:
 
-```
+```js
 var config = {
     '#merge': [
         {debug: true, url: 'http://localhost'},
@@ -58,7 +58,7 @@ var devConfig = require('JSONSharp').process(config, context);
 
 Results in the following `devConfig` object:
 
-```
+```js
 {
     debug: true, // Debug flag inherited from merging with the defaults
     url: 'http://dev.com/' // Url is replaced
