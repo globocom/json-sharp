@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/globocom/json-sharp.png?branch=master)](https://travis-ci.org/globocom/json-sharp)
+
 json-sharp
 ==========
 
