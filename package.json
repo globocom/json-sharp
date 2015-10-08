@@ -1,6 +1,6 @@
 {
   "name": "json-sharp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Process operations on pure JSON objects",
   "author": {
     "name": "Globo.com"
