@@ -24,6 +24,9 @@
     "load-grunt-tasks": "",
     "mocha": ""
   },
+  "scripts": {
+    "test": "make test"
+  },
   "engines": {
     "node": ">=0.8.0"
   },

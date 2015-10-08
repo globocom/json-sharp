@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "0.12"
+notifications:
+  email:
+    - backstage4@corp.globo.com
+    - backstage5@corp.globo.com
