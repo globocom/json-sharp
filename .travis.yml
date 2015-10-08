@@ -5,3 +5,5 @@ notifications:
   email:
     - backstage4@corp.globo.com
     - backstage5@corp.globo.com
+
+before_install: npm install -g grunt-cli
