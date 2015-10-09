@@ -99,6 +99,13 @@ describe('json-sharp', function () {
             var result = JSONSharp.process(this.obj, context);
             expect(result).to.be.undefined;
         });
+
+        it('should access deep context property using JSONPath', function () {
+            this.obj['#switch']['#property'] = '$.deep.option[0]';
+            var context = {deep: {option: ['a']}};
+            var result = JSONSharp.process(this.obj, context);
+            expect(result).to.be.equal('AAA');
+        });
     });
 
     describe('#merge', function () {

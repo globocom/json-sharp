@@ -5,17 +5,17 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['deepmerge'], factory);
+        define(['deepmerge', 'JSONPath'], factory);
     } else if (typeof module === 'object' && module.exports) {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like environments that support module.exports,
         // like Node.
-        module.exports = factory(require('deepmerge'));
+        module.exports = factory(require('deepmerge'), require('JSONPath'));
     } else {
         // Browser globals (root is window)
-        root.returnExports = factory(root.deepmerge);
+        root.returnExports = factory(root.deepmerge, root.JSONPath);
     }
-}(this, function (deepmerge) { /* jshint ignore:line */
+}(this, function (deepmerge, JSONPath) { /* jshint ignore:line */
     var JSONSharp = {
         process: function (obj, context) {
             var clone = this._clone(obj);
@@ -67,13 +67,19 @@
                 }
             }
         },
+        resolveProperty: function (property, context) {
+            if (property.indexOf('$.') !== 0) {
+                return context[property];
+            }
+            return JSONPath.eval(context, property);
+        },
         operations: {
             '#merge': function (obj) {
                 return deepmerge.apply(deepmerge, obj);
             },
             '#switch': function (obj, context) {
                 var result;
-                var value = context[obj['#property']];
+                var value = JSONSharp.resolveProperty(obj['#property'], context);
                 var options = obj['#case'];
 
                 result = options[value];
