@@ -73,7 +73,7 @@ Results in the following `devConfig` object:
 ### `#merge`
 
 The `#merge` operation takes a list of objects and deeply merges its properties
-using the `deepmerge` library.
+using the [deepmerge](https://www.npmjs.com/package/deepmerge) library.
 
 Examples:
 
@@ -117,5 +117,6 @@ JSONSharp.process(switchObj, {name: '$.a'});
 
 ## Property resolution
 
-A `#property` starting with `$.` will be resolved using the JSONPath library,
-otherwise simple property access will be used.
+A `#property` starting with `$.` will be resolved using the
+[JSONPath](https://www.npmjs.com/package/JSONPath) library, otherwise simple
+property access will be used.
