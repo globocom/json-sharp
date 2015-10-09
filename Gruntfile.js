@@ -70,7 +70,7 @@ module.exports = function(grunt) {
                 commitMessage: 'New version %VERSION%',
                 commitFiles: ['dist', 'package.json'],
                 createTag: true,
-                tagName: '<%= pkg.name %>-%VERSION%',
+                tagName: '%VERSION%',
                 tagMessage: 'New version %VERSION%',
                 push: false,
                 pushTo: 'origin master',
