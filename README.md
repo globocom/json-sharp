@@ -66,3 +66,56 @@ Results in the following `devConfig` object:
     url: 'http://dev.com/' // Url is replaced
 }
 ```
+
+
+## Operations
+
+### `#merge`
+
+The `#merge` operation takes a list of objects and deeply merges its properties
+using the `deepmerge` library.
+
+Examples:
+
+```
+JSONSharp.process({'#merge': [{a: 'a'}, {b: 'b']}, {});
+// ==> {a: 'a', b: 'b'}
+```
+
+
+### `#switch`
+
+The `#switch` operation works much like the [switch](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/switch) Javascript statement, with the exception that it doesn't
+use a `break` statement.
+
+It takes an object with the following properties:
+
+* `#property`: the property name or `JSONPath` to be matched for results
+* `#case`: an object mapping `#property` values to desired results
+* `#case.#default`: the value will be used if no matching value is found
+
+Examples:
+
+```
+var switchObj = {
+    '#switch': {
+        '#property': 'name',
+        '#case': {a: 'Prop A', '#default': 'not found'}
+    }
+};
+
+JSONSharp.process(switchObj, {});
+// ==> "not found"
+
+JSONSharp.process(switchObj, {name: 'a'});
+// ==> "Prop A"
+
+JSONSharp.process(switchObj, {name: '$.a'});
+// ==> "Prop A"
+```
+
+
+## Property resolution
+
+A `#property` starting with `$.` will be resolved using the JSONPath library,
+otherwise simple property access will be used.
