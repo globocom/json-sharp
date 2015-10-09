@@ -28,3 +28,6 @@ build:
 
 test:
 	@grunt test
+
+iron_test:
+	@iron-node ./node_modules/.bin/_mocha tests
