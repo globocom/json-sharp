@@ -77,7 +77,7 @@ using the `deepmerge` library.
 
 Examples:
 
-```
+```js
 JSONSharp.process({'#merge': [{a: 'a'}, {b: 'b']}, {});
 // ==> {a: 'a', b: 'b'}
 ```
@@ -96,7 +96,7 @@ It takes an object with the following properties:
 
 Examples:
 
-```
+```js
 var switchObj = {
     '#switch': {
         '#property': 'name',
