@@ -13,7 +13,7 @@
         module.exports = factory(require('deepmerge'), require('JSONPath'));
     } else {
         // Browser globals (root is window)
-        root.returnExports = factory(root.deepmerge, root.jsonPath);
+        root.JSONSharp = factory(root.deepmerge, root.jsonPath ).JSONSharp;
     }
 }(this, function (deepmerge, JSONPath) { /* jshint ignore:line */
     var JSONSharp = {
